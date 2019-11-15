@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AppNavigator from "./navigation/AppNavigator";
-import FireBase from "./firebase";
+import FireBase from "./Firebase/firebase";
 
+//Loads Firebase info
 FireBase;
 
-export default function App(props) {
+function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
@@ -62,3 +63,54 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   }
 });
+
+// import React from "react";
+// import FireBase from "./Firebase/firebase";
+// import { createRootNavigator } from "./router";
+// import { isSignedIn } from "./auth";
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     //Loads Firebase info
+//     FireBase;
+//     this.state = {
+//       signedIn: false,
+//       checkedSignIn: false
+//     };
+//   }
+
+//   componentDidMount() {
+//     isSignedIn()
+//       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+//       .catch(err => alert("An error occurred!"));
+//   }
+
+//   isSignedIn() {
+//     return new Promise((resolve, reject) => {
+//       AsyncStorage.getItem(USER_KEY)
+//         .then(res => {
+//           if (res !== null) {
+//             resolve(true);
+//           } else {
+//             resolve(false);
+//           }
+//         })
+//         .catch(err => reject(err));
+//     });
+//   };
+
+//   render() {
+//     const { checkedSignIn, signedIn } = this.state;
+
+//     // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
+//     if (!checkedSignIn) {
+//       return null;
+//     }
+
+//     const Layout = createRootNavigator(signedIn);
+//     return <Layout />;
+//   }
+// }
+
+export default App;

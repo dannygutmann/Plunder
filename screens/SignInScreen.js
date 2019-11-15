@@ -3,7 +3,7 @@ import { Container, Item, Form, Input, Button, Label } from "native-base";
 import { StyleSheet, Text } from "react-native";
 import firebase from "firebase";
 
-class LoginScreen extends React.Component {
+class SignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,23 +11,24 @@ class LoginScreen extends React.Component {
       password: ""
     };
   }
-  SignIn = (email, password) => {
+
+  _onSignIn = (email, password) => {
     try {
       firebase.auth().signInWithEmailAndPassword(email, password);
       firebase.auth().onAuthStateChanged(user => {
-        alert(user.email);
+        //https://firebase.google.com/docs/auth/web/manage-users
+        if (user) {
+          alert(user.email);
+          this.props.navigation.navigate("App");
+        }
       });
     } catch (error) {
       console.log(error.toString(error));
     }
   };
 
-  SignUp = (email, password) => {
-    try {
-      firebase.auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      console.log(error.toString(error));
-    }
+  _onSignUpClick = () => {
+    this.props.navigation.navigate("SignUp");
   };
 
   render() {
@@ -54,18 +55,14 @@ class LoginScreen extends React.Component {
           <Button
             full
             rounded
-            onPress={() => this.SignIn(this.state.email, this.state.password)}
+            onPress={() =>
+              this._onSignIn(this.state.email, this.state.password)
+            }
           >
             <Text>Sign In</Text>
           </Button>
-          <Button
-            full
-            rounded
-            success
-            style={{ marginTop: 20 }}
-            onPress={() => this.SignUp(this.state.email, this.state.password)}
-          >
-            <Text>Signup</Text>
+          <Button full rounded onPress={() => this._onSignUpClick()}>
+            <Text>Sign Up</Text>
           </Button>
         </Form>
       </Container>
@@ -80,4 +77,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+export default SignInScreen;
