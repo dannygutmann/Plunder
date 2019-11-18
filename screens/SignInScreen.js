@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Item, Form, Input, Button, Label } from "native-base";
-import { StyleSheet, Text } from "react-native";
+import { Container, Item, Form, Input, Button, Label, Text } from "native-base";
+import { StyleSheet } from "react-native";
 import firebase from "firebase";
 
 class SignInScreen extends React.Component {
@@ -14,14 +14,23 @@ class SignInScreen extends React.Component {
 
   _onSignIn = (email, password) => {
     try {
-      firebase.auth().signInWithEmailAndPassword(email, password);
-      firebase.auth().onAuthStateChanged(user => {
-        //https://firebase.google.com/docs/auth/web/manage-users
-        if (user) {
-          alert(user.email);
-          this.props.navigation.navigate("App");
-        }
-      });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          this.props.navigation.navigate("Home");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+          console.log(
+            "error code: ",
+            errorCode,
+            " || error message: ",
+            errorMessage
+          );
+        });
     } catch (error) {
       console.log(error.toString(error));
     }

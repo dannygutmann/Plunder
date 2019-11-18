@@ -16,8 +16,8 @@ import MainTabNavigator from "./MainTabNavigator";
 
 const AppStack = createStackNavigator({
   Main: MainTabNavigator,
-  Home: HomeScreen,
-  Profile: ProfileScreen
+  Profile: ProfileScreen,
+  Home: HomeScreen
 });
 const AuthStack = createStackNavigator({
   Login: SignInScreen,

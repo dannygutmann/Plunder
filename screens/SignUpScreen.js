@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Item, Form, Input, Button, Label } from "native-base";
-import { StyleSheet, Text } from "react-native";
+import { Container, Item, Form, Input, Button, Label, Text } from "native-base";
+import { StyleSheet } from "react-native";
 import firebase from "firebase";
 
 class SignUpScreen extends React.Component {
@@ -10,12 +10,28 @@ class SignUpScreen extends React.Component {
       email: "",
       password: ""
     };
+    this._onSignUp = this._onSignUp.bind(this);
   }
 
   _onSignUp = (email, password) => {
     try {
-      firebase.auth().createUserWithEmailAndPassword(email, password);
-      this.props.navigation.navigate("Login");
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          this.props.navigation.navigate("Home");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+          console.log(
+            "error code: ",
+            errorCode,
+            " || error message: ",
+            errorMessage
+          );
+        });
     } catch (error) {
       console.log(error.toString(error));
     }

@@ -1,7 +1,7 @@
 import firebase from "firebase";
-import { Card, Text } from "native-base";
+import { Card, Text, Button } from "native-base";
 import React from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 class ProfileScreen extends React.Component {
   static navigationOptions = {
@@ -10,7 +10,7 @@ class ProfileScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ paddingVertical: 20 }}>
+      <View style={styles.outerView}>
         <Card title="John Doe">
           <View
             style={{
@@ -26,11 +26,9 @@ class ProfileScreen extends React.Component {
           >
             <Text style={styles.text}>JD</Text>
           </View>
-          <Button
-            backgroundColor="#03A9F4"
-            title="SIGN OUT"
-            onPress={() => this._onSignOut()}
-          />
+          <Button style={styles.button} onPress={() => this._onSignOut()}>
+            <Text style={styles.button}>Sign Out</Text>
+          </Button>
         </Card>
       </View>
     );
@@ -48,7 +46,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  text: { color: "white", fontSize: 28 }
+  text: { color: "white", fontSize: 28 },
+  button: {
+    backgroundColor: "#03A9F4",
+    justifyContent: "center"
+  },
+  outerView: {
+    paddingVertical: 40
+  }
 });
 
 export default ProfileScreen;
